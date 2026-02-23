@@ -52,7 +52,7 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans JP',sans-seri
 .card-info{padding:.9rem 1rem 1.1rem}
 .card-cat{font-size:.5rem;letter-spacing:.18em;color:var(--text-muted);text-transform:uppercase;margin-bottom:.2rem}
 .card-name1{font-family:'Noto Serif JP',serif;font-weight:400;font-size:.75rem;line-height:1.45}
-.card-name2{font-family:'Noto Sans JP',sans-serif;font-weight:300;font-size:.62rem;color:var(--text-dim);margin-top:.1rem;min-height:1em}
+.card-name2{font-family:'Noto Serif JP',serif;font-weight:300;font-size:.75rem;color:var(--text-dim);margin-top:.1rem;min-height:1em}
 .card-price{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:500;color:var(--gold);margin-top:.4rem}
 .card-price small{font-size:.5rem;color:var(--text-muted);font-family:'Noto Sans JP',sans-serif;font-weight:300;margin-left:.2rem}
 .scroll-arrows{display:flex;gap:.35rem;padding:.6rem var(--pad) 1.5rem;justify-content:flex-end;max-width:1400px;margin:0 auto}
@@ -84,10 +84,10 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans JP',sans-seri
 .mi-img .phs{font-size:1.3rem;color:var(--border);opacity:.5}
 .mi-cat{font-size:.48rem;letter-spacing:.18em;color:var(--text-muted);text-transform:uppercase;margin-bottom:.15rem}
 .mi-name1{font-family:'Noto Serif JP',serif;font-weight:400;font-size:.7rem;line-height:1.4}
-.mi-name2{font-family:'Noto Sans JP',sans-serif;font-weight:300;font-size:.58rem;color:var(--text-dim);line-height:1.3;margin-top:.1rem;min-height:.8em}
+.mi-name2{font-family:'Noto Serif JP',serif;font-weight:300;font-size:.7rem;color:var(--text-dim);line-height:1.3;margin-top:.1rem;min-height:.8em}
 .mi-names{flex-grow:1;margin-bottom:.35rem}
 .mi-price{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:500;color:var(--gold)}
-.mi-new{position:absolute;top:.5rem;right:.5rem;width:5px;height:5px;border-radius:50%;background:var(--gold)}
+
 .store-section{margin-top:2.5rem;border-top:1px solid var(--border);background:var(--bg-warm);padding:3.5rem var(--pad)}
 .store-inner{max-width:1050px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:2.5rem}
 .store-info-area h2{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:1.5rem;letter-spacing:.05em;margin-bottom:.15rem}
@@ -258,8 +258,6 @@ function mc(i){
   return"リキュール";
 }
 function sEl(id,px){document.getElementById(id).scrollBy({left:px,behavior:'smooth'})}
-function newIds(){return D.slice(-30).map(function(i){return i.id})}
-
 function renderRec(){
   var t=document.getElementById('recTrack');
   var items=D.filter(function(i){return i.rec});
@@ -312,9 +310,8 @@ function renderC(){
 }
 
 function ri(item){
-  var nids=newIds();var isNew=nids.indexOf(item.id)>=0;
   var n2=item.name2?'<div class="mi-name2">'+item.name2+'</div>':'<div class="mi-name2"></div>';
-  return '<div class="mi">'+(isNew?'<div class="mi-new"></div>':'')+'<div class="mi-img"><img src="bottleimages/'+item.id+'.png" alt="'+item.name1+'" loading="lazy" onerror="this.parentElement.innerHTML=\'<div class=phs>🥃</div>\'"></div><div class="mi-cat">'+item.sub+'</div><div class="mi-names"><div class="mi-name1">'+item.name1+'</div>'+n2+'</div><div class="mi-price">'+item.price+'</div></div>';
+  return '<div class="mi"><div class="mi-img"><img src="bottleimages/'+item.id+'.png" alt="'+item.name1+'" loading="lazy" onerror="this.parentElement.innerHTML=\'<div class=phs>🥃</div>\'"></div><div class="mi-cat">'+item.sub+'</div><div class="mi-names"><div class="mi-name1">'+item.name1+'</div>'+n2+'</div><div class="mi-price">'+item.price+'</div></div>';
 }
 
 function init(){
