@@ -31,7 +31,7 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans JP',sans-seri
 .hero-stats{display:flex;gap:3rem;opacity:0;animation:fadeUp .8s ease .75s forwards}
 .hero-stat-num{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:400;color:var(--gold);line-height:1}
 .hero-stat-label{font-size:.55rem;letter-spacing:.2em;color:var(--text-muted);margin-top:.25rem}
-.scroll-indicator{position:absolute;bottom:1.8rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.4rem;opacity:0;animation:fadeUp .8s ease 1s forwards}
+.scroll-indicator{position:absolute;bottom:1.8rem;left:0;right:0;display:flex;flex-direction:column;align-items:center;gap:.4rem;opacity:0;animation:fadeUp .8s ease 1s forwards}
 .scroll-indicator span{font-size:.5rem;letter-spacing:.3em;color:var(--text-muted)}
 .scroll-line{width:1px;height:30px;background:linear-gradient(to bottom,var(--gold-dim),transparent);animation:scrollPulse 2s ease infinite}
 @keyframes scrollPulse{0%,100%{opacity:.3;transform:scaleY(.6)}50%{opacity:1;transform:scaleY(1)}}
@@ -39,7 +39,7 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans JP',sans-seri
 .section-header{padding:3rem var(--pad) 1.2rem;max-width:1400px;margin:0 auto}
 .section-label{font-size:.52rem;letter-spacing:.4em;color:var(--gold-dim);text-transform:uppercase;margin-bottom:.2rem}
 .section-title{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:clamp(1.5rem,3vw,2.2rem);letter-spacing:.05em}
-.h-track{display:flex;gap:1px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-left:var(--pad);padding-right:var(--pad);scroll-padding-left: var(--pad)}
+.h-track{display:flex;gap:1px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-left:var(--pad);padding-right:var(--pad);scroll-padding-left:var(--pad)}
 .h-track::-webkit-scrollbar{display:none}
 .recommend-track{gap:1rem}
 .recommend-card{flex:0 0 240px;scroll-snap-align:start;background:var(--bg-card);border:1px solid var(--border);overflow:hidden;transition:all .3s ease}
@@ -51,8 +51,9 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans JP',sans-seri
 .card-badge{position:absolute;top:.6rem;left:.6rem;background:var(--text);color:#fff;font-size:.48rem;font-weight:500;letter-spacing:.15em;padding:.18rem .45rem}
 .card-info{padding:.9rem 1rem 1.1rem}
 .card-cat{font-size:.5rem;letter-spacing:.18em;color:var(--text-muted);text-transform:uppercase;margin-bottom:.2rem}
-.card-name{font-family:'Noto Serif JP',serif;font-weight:400;font-size:.75rem;margin-bottom:.4rem;line-height:1.45;min-height:2.2em}
-.card-price{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:500;color:var(--gold)}
+.card-name1{font-family:'Noto Serif JP',serif;font-weight:400;font-size:.75rem;line-height:1.45}
+.card-name2{font-family:'Noto Sans JP',sans-serif;font-weight:300;font-size:.62rem;color:var(--text-dim);margin-top:.1rem;min-height:1em}
+.card-price{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:500;color:var(--gold);margin-top:.4rem}
 .card-price small{font-size:.5rem;color:var(--text-muted);font-family:'Noto Sans JP',sans-serif;font-weight:300;margin-left:.2rem}
 .scroll-arrows{display:flex;gap:.35rem;padding:.6rem var(--pad) 1.5rem;justify-content:flex-end;max-width:1400px;margin:0 auto}
 .scroll-arrow{width:34px;height:34px;border:1px solid var(--border);background:var(--bg-card);color:var(--text-dim);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .3s}
@@ -82,7 +83,9 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans JP',sans-seri
 .mi:hover .mi-img img{transform:scale(1.03)}
 .mi-img .phs{font-size:1.3rem;color:var(--border);opacity:.5}
 .mi-cat{font-size:.48rem;letter-spacing:.18em;color:var(--text-muted);text-transform:uppercase;margin-bottom:.15rem}
-.mi-name{font-family:'Noto Serif JP',serif;font-weight:400;font-size:.7rem;line-height:1.4;flex-grow:1;margin-bottom:.35rem}
+.mi-name1{font-family:'Noto Serif JP',serif;font-weight:400;font-size:.7rem;line-height:1.4}
+.mi-name2{font-family:'Noto Sans JP',sans-serif;font-weight:300;font-size:.58rem;color:var(--text-dim);line-height:1.3;margin-top:.1rem;min-height:.8em}
+.mi-names{flex-grow:1;margin-bottom:.35rem}
 .mi-price{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:500;color:var(--gold)}
 .mi-new{position:absolute;top:.5rem;right:.5rem;width:5px;height:5px;border-radius:50%;background:var(--gold)}
 .store-section{margin-top:2.5rem;border-top:1px solid var(--border);background:var(--bg-warm);padding:3.5rem var(--pad)}
@@ -183,22 +186,21 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans JP',sans-seri
 
 <script>
 /*
-  bottle.csv の形式:
-  商品名,価格,カテゴリ,おすすめ,在庫
-  ジムビーム,500,アメリカン・バーボン,0,1
-  マッカラン18年,8000,スコッチ・スペイサイド,1,1
-  （在庫が0の行は非表示。おすすめが1の行は「今日のおすすめ」に表示）
-  新しいお酒は最後の行に追加 → 最新30件に NEW マークが付く
+  bottle.csv 形式:
+  ID,商品名1,商品名2,価格,カテゴリ,おすすめ,在庫
+  1,グレンアラヒー,12年,1500,スコッチ・スペイサイド,0,1
+  画像: bottleimages/{ID}.png
+  在庫0 → 非表示 / おすすめ1 → 今日のおすすめに表示
+  ソート: 商品名1の名前順 → 同名は商品名2の年数順
 */
 
-const CSV_PATH='bottle.csv';
-const MAIN=["すべて","ウイスキー","ブランデー","ワイン","スピリッツ","リキュール"];
-const W_SUBS=["スコッチ・アイラ","スコッチ・アイランズ","スコッチ・スペイサイド","スコッチ・ハイランド","スコッチ・キャンベルタウン","スコッチ・ローランド","スコッチ・ブレンデッド","アイリッシュ","アメリカン・バーボン","アメリカン・テネシー","アメリカン・ライ","カナディアン","ジャパニーズ"];
-const S_SUBS=["ジン","ウォッカ","ラム","テキーラ"];
-const ALL_SO=[...W_SUBS,"ブランデー","ワイン",...S_SUBS,"リキュール"];
-let D=[],aM="すべて",aS=null;
+var CSV_PATH='bottle.csv';
+var MAIN=["すべて","ウイスキー","ブランデー","ワイン","スピリッツ","リキュール","焼酎"];
+var W_SUBS=["スコッチ・アイラ","スコッチ・アイランズ","スコッチ・スペイサイド","スコッチ・ハイランド","スコッチ・キャンベルタウン","スコッチ・ローランド","スコッチ・ブレンデッド","アイリッシュ","アメリカン・バーボン","アメリカン・テネシー","アメリカン・ライ","カナディアン","ジャパニーズ","その他ウイスキー"];
+var S_SUBS=["ジン","ウォッカ","ラム","テキーラ"];
+var ALL_SO=[].concat(W_SUBS,["ブランデー","ワイン"],S_SUBS,["リキュール","焼酎"]);
+var D=[],aM="すべて",aS=null;
 
-/* CSV parser */
 function parseCSV(t){
   var L=t.replace(/\r\n/g,'\n').replace(/\r/g,'\n').split('\n');
   if(L.length<2)return[];
@@ -208,29 +210,37 @@ function parseCSV(t){
   return R;
 }
 function pL(l){var r=[],c='',q=false;for(var i=0;i<l.length;i++){var ch=l[i];if(ch==='"')q=!q;else if(ch===','&&!q){r.push(c);c=''}else c+=ch}r.push(c);return r}
+function fmtPrice(n){return '\u00a5'+Number(n).toLocaleString()}
 
-/* Format price: number → ¥1,200 */
-function fmtPrice(n){return '¥'+Number(n).toLocaleString()}
+/* Sort: name1 alphabetically, then name2 by extracted number */
+function extractNum(s){var m=s.match(/(\d+)/);return m?parseInt(m[1],10):0}
+function sortItems(arr){
+  return arr.sort(function(a,b){
+    if(a.name1<b.name1)return -1;
+    if(a.name1>b.name1)return 1;
+    return extractNum(a.name2)-extractNum(b.name2);
+  });
+}
 
-/* Load CSV */
 async function loadData(){
   try{
     var res=await fetch(CSV_PATH+'?t='+Date.now());
     if(!res.ok)throw new Error('HTTP '+res.status);
     var text=await res.text();
     var rows=parseCSV(text);
-    /* Map rows → items, filter out stock=0 */
     D=[];
-    rows.forEach(function(r,i){
-      var name=r['商品名']||'';
-      var priceRaw=r['価格']||'0';
+    rows.forEach(function(r){
+      var id=parseInt(r['ID']||'0',10);
+      var name1=r['商品名1']||'';
+      var name2=r['商品名2']||'';
+      var priceNum=parseInt((r['価格']||'0').replace(/[¥,\s]/g,''),10)||0;
       var cat=r['カテゴリ']||'';
       var rec=(r['おすすめ']||'0').trim();
       var stock=parseInt(r['在庫']||'0',10);
-      var priceNum=parseInt(priceRaw.replace(/[¥,]/g,''),10)||0;
-      if(!name||!priceNum||stock===0)return; /* skip empty/no-price/out-of-stock */
-      D.push({id:i+1,name:name,price:fmtPrice(priceNum),priceNum:priceNum,sub:cat,rec:rec==='1'});
+      if(!name1||!priceNum||stock===0)return;
+      D.push({id:id,name1:name1,name2:name2,price:fmtPrice(priceNum),priceNum:priceNum,sub:cat,rec:rec==='1'});
     });
+    sortItems(D);
     init();
   }catch(e){
     console.error('CSV load error:',e);
@@ -239,7 +249,14 @@ async function loadData(){
   }
 }
 
-function mc(i){if(W_SUBS.indexOf(i.sub)>=0)return"ウイスキー";if(S_SUBS.indexOf(i.sub)>=0)return"スピリッツ";if(i.sub==="ブランデー")return"ブランデー";if(i.sub==="ワイン")return"ワイン";return"リキュール"}
+function mc(i){
+  if(W_SUBS.indexOf(i.sub)>=0)return"ウイスキー";
+  if(S_SUBS.indexOf(i.sub)>=0)return"スピリッツ";
+  if(i.sub==="ブランデー")return"ブランデー";
+  if(i.sub==="ワイン")return"ワイン";
+  if(i.sub==="焼酎")return"焼酎";
+  return"リキュール";
+}
 function sEl(id,px){document.getElementById(id).scrollBy({left:px,behavior:'smooth'})}
 function newIds(){return D.slice(-30).map(function(i){return i.id})}
 
@@ -250,7 +267,8 @@ function renderRec(){
   if(!items.length){sec.style.display='none';return}
   sec.style.display='';
   t.innerHTML=items.map(function(item,idx){
-    return '<div class="recommend-card"><div class="card-image"><img src="bottleimages/'+item.id+'.png" alt="'+item.name+'" onerror="this.parentElement.innerHTML=\'<div class=ph>'+(idx+1)+'</div>\'"><div class="card-badge">PICK</div></div><div class="card-info"><div class="card-cat">'+item.sub+'</div><div class="card-name">'+item.name+'</div><div class="card-price">'+item.price+'<small>（税込）</small></div></div></div>';
+    var n2=item.name2?'<div class="card-name2">'+item.name2+'</div>':'<div class="card-name2"></div>';
+    return '<div class="recommend-card"><div class="card-image"><img src="bottleimages/'+item.id+'.png" alt="'+item.name1+'" onerror="this.parentElement.innerHTML=\'<div class=ph>'+(idx+1)+'</div>\'"><div class="card-badge">PICK</div></div><div class="card-info"><div class="card-cat">'+item.sub+'</div><div class="card-name1">'+item.name1+'</div>'+n2+'<div class="card-price">'+item.price+'<small>（税込）</small></div></div></div>';
   }).join('');
 }
 
@@ -280,6 +298,7 @@ function renderC(){
   else if(aM==="スピリッツ")subOrder=aS?[aS]:S_SUBS;
   else if(aM==="ブランデー")subOrder=["ブランデー"];
   else if(aM==="ワイン")subOrder=["ワイン"];
+  else if(aM==="焼酎")subOrder=["焼酎"];
   else subOrder=["リキュール"];
 
   var h='';
@@ -294,7 +313,8 @@ function renderC(){
 
 function ri(item){
   var nids=newIds();var isNew=nids.indexOf(item.id)>=0;
-  return '<div class="mi">'+(isNew?'<div class="mi-new"></div>':'')+'<div class="mi-img"><img src="bottleimages/'+item.id+'.png" alt="'+item.name+'" loading="lazy" onerror="this.parentElement.innerHTML=\'<div class=phs>🥃</div>\'"></div><div class="mi-cat">'+item.sub+'</div><div class="mi-name">'+item.name+'</div><div class="mi-price">'+item.price+'</div></div>';
+  var n2=item.name2?'<div class="mi-name2">'+item.name2+'</div>':'<div class="mi-name2"></div>';
+  return '<div class="mi">'+(isNew?'<div class="mi-new"></div>':'')+'<div class="mi-img"><img src="bottleimages/'+item.id+'.png" alt="'+item.name1+'" loading="lazy" onerror="this.parentElement.innerHTML=\'<div class=phs>🥃</div>\'"></div><div class="mi-cat">'+item.sub+'</div><div class="mi-names"><div class="mi-name1">'+item.name1+'</div>'+n2+'</div><div class="mi-price">'+item.price+'</div></div>';
 }
 
 function init(){
