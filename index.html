@@ -150,7 +150,7 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans JP',sans-seri
 
 <section id="recommend">
 <div class="section-header"><div class="section-label">Staff Picks</div><div class="section-title">今日のおすすめ</div></div>
-<div style="padding:0 0 .5rem"><div class="h-track recommend-track" id="recTrack"></div></div>
+<div style="padding:.5rem 0"><div class="h-track recommend-track" id="recTrack"></div></div>
 <div class="scroll-arrows">
 <button class="scroll-arrow" onclick="sEl('recTrack',-280)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 18l-6-6 6-6"/></svg></button>
 <button class="scroll-arrow" onclick="sEl('recTrack',280)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 18l6-6-6-6"/></svg></button>
@@ -213,12 +213,11 @@ function pL(l){var r=[],c='',q=false;for(var i=0;i<l.length;i++){var ch=l[i];if(
 function fmtPrice(n){return '\u00a5'+Number(n).toLocaleString()}
 
 /* Sort: name1 alphabetically, then name2 by extracted number */
-function extractNum(s){var m=s.match(/(\d+)/);return m?parseInt(m[1],10):0}
 function sortItems(arr){
   return arr.sort(function(a,b){
     if(a.name1<b.name1)return -1;
     if(a.name1>b.name1)return 1;
-    return extractNum(a.name2)-extractNum(b.name2);
+    return a.priceNum-b.priceNum;
   });
 }
 
@@ -261,6 +260,7 @@ function sEl(id,px){document.getElementById(id).scrollBy({left:px,behavior:'smoo
 function renderRec(){
   var t=document.getElementById('recTrack');
   var items=D.filter(function(i){return i.rec});
+  items.sort(function(a,b){return a.priceNum-b.priceNum});
   var sec=t.closest('section');
   if(!items.length){sec.style.display='none';return}
   sec.style.display='';
